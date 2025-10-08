@@ -196,7 +196,7 @@ class HealthHandler(http.server.SimpleHTTPRequestHandler):
         return
 
 def run_health_server():
-    port = 8080
+    port = 8000
     try:
         with socketserver.TCPServer(('', port), HealthHandler) as httpd:
             print(f"✅ Health check server running on port {port}")
@@ -230,5 +230,6 @@ if __name__ == "__main__":
     
     # Start the bot
     start_bot()
+
 
 
