@@ -199,7 +199,8 @@ def start_bot():
     while True:
         try:
             print(" Starting bot polling...")
-            bot.infinity_polling(timeout=60, long_polling_timeout=60, restart_on_change=True)
+            # Removed restart_on_change parameter
+            bot.infinity_polling(timeout=60, long_polling_timeout=60)
         except Exception as e:
             print(f"❌ Bot polling error: {e}")
             print("🔄 Restarting in 10 seconds...")
@@ -219,3 +220,4 @@ if __name__ == "__main__":
     
     # Start the bot
     start_bot()
+
