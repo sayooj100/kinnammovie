@@ -66,6 +66,16 @@ def save_private_channel_id(message):
         chat_id = int(message.text.strip())
         invite_link = pending_batches[admin_id]["invite_link"]
 
+        # ✅ NEW: Validate bot can send messages in this channel
+        try:
+            test_msg = bot.send_message(chat_id, "🤖 Bot access check...")
+            bot.delete_message(chat_id, test_msg.message_id)
+            bot.send_message(admin_id, "✅ Bot verified as admin in the channel!")
+        except Exception as e:
+            bot.send_message(admin_id, f"❌ Bot cannot send messages in this channel. Make sure bot is admin with 'Post Messages' permission.")
+            return
+
+        # Continue with existing code
         channels_col.update_one(
             {"admin_id": admin_id},
             {"$set": {"chat_id": chat_id, "invite_link": invite_link}},
@@ -220,4 +230,5 @@ if __name__ == "__main__":
     
     # Start the bot
     start_bot()
+
 
